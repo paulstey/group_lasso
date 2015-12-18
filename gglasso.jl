@@ -9,36 +9,12 @@ using DataFrames
 using Debug
 
 
-
-# include("/home/ubuntu/juliawd/grp_lasso.jl")
-
-
-# d_raw = readcsv("/home/ubuntu/rwd/bardet.csv", header = true)
-# d_raw = readcsv("C:/Users/Pstey/juliawd/grouped_lasso/bardet.csv", header = true)
-
-# d = d_raw[1]
-
-# X = d[:, 1:100]
-# y = d[:, 101]
-
-
-
-
-# group1 = rep(1:20, each = 5)
-
-
-
-# @time z = grp_lasso(X, y, group1)
-
-
 type LassoPath
     lambdas::Array{Float64, 1}
     betas::Array{Float64, 2}
     beta0s::Array{Float64, 1}
     npass::Int64
 end
-
-
 
 
 function count_groups(groups::Array{Int64, 1})
@@ -52,7 +28,6 @@ function count_groups(groups::Array{Int64, 1})
     end
     return cnt
 end
-
 
 
 function lamfix(lam::Array{Float64, 1})
