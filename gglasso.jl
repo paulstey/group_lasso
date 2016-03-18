@@ -45,7 +45,6 @@ end
 
 
 function not_converged(b::Array{Float64, 1}, oldbeta::Array{Float64, 1}, max_gam::Float64, eps::Float64)
-
     result = true
     n = length(b)
     for i = 1:n
@@ -77,7 +76,6 @@ end
 
 
 function update_jxx!(jxx::Array{Int64, 1}, ga::Array{Float64, 1}, pf::Array{Float64, 1}, al::Float64, al0::Float64, bn::Int64)
-
     tlam = 2*al - al0
     for i = 1:bn                       
         if jxx[i] == 1 
@@ -93,7 +91,6 @@ end
 
 
 function compute_u(x::Array{Float64, 2}, r::Array{Float64, 1}, b::Array{Float64, 1}, start::Int64, ending::Int64, nobs::Int64, gam_i::Float64)
-
     u_tmp = (x[:, start:ending]'*r)
     n = length(u_tmp)
     u = Array(Float64, n)
@@ -108,7 +105,6 @@ end
 
 
 function compute_b(u::Array{Float64, 1}, t::Float64, gam_i::Float64, unorm::Float64)
-
     n = length(u)
     res = Array(Float64, n)
     tmp_term = t/(gam_i*unorm)
@@ -122,7 +118,6 @@ end
 
         
 function count_nonzero_betas(beta::Array{Float64, 2}, idx::Array{Int64, 1}, ix::Array{Int64, 1}, iy::Array{Int64, 1}, l::Int64, ni::Int64)
-
     me = 0
     for j = 1:ni
         g = idx[j]
@@ -148,7 +143,6 @@ end
 
 
 function get_upperbound(x::Array{Float64, 2}, ix::Array{Int64, 1}, iy::Array{Int64, 1}, bn::Int64)
-    
     gam = zeros(Float64, bn)
     for i = 1:bn
         gam[i] = maximum(eig(x[:, ix[i]:iy[i]]' * x[:, ix[i]:iy[i]])[1])
@@ -162,7 +156,6 @@ end
 
 
 function grp_lasso(x, y, group = nothing, loss = "ls", nlam::Int64 = 100, lambda = nothing, eps = 1.0E-08, maxit = 3.0E+08, delta = nothing, intr = true)
-
     if typeof(x) != Array{Float64, 2}
         x = convert(Array{Float64, 2}, x)
     end
@@ -241,21 +234,7 @@ end
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps, maxit, intr)  
-# - - - some initial setup - - -
     nobs, nvars = size(x)
     bignum = 9.9E30
     mnlam = 6
@@ -284,7 +263,7 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
     r = y
     npass = 0
     ni = 0
-# --------- lambda loop ----------------------------
+    # --------- lambda loop ----------------------------
     if flmin < 1.0
         flmin = max(mfl, flmin)       
         alf = flmin^(1/(nlam - 1))
@@ -316,7 +295,7 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
             end
         end  
         update_jxx!(jxx, ga, pf, al, al0, bn)
-# --------- outer loop ----------------------------
+        # --------- outer loop ----------------------------
         persist = true
         while persist
             oldbeta[nvars+1] = b[nvars+1]
@@ -326,7 +305,7 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
                     oldbeta[ix[g]:iy[g]] = b[ix[g]:iy[g]]
                 end 
             end
-# --middle loop-------------------------------------
+            # --middle loop-------------------------------------
             while true              
                 npass += 1
                 dif = 0.0               
@@ -374,7 +353,7 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
                 elseif npass > maxit
                     break
                 end          
-# --inner loop----------------------
+                # --inner loop----------------------
                 while true                     
                     npass += 1
                     dif = 0.0      
@@ -415,7 +394,7 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
             if ni > pmax
                 break
             end
-# --- final check ------------------------
+            # --- final check ------------------------
             persist = false
             max_gam = maximum(gam)
             if not_converged(b, oldbeta, max_gam, eps) 
@@ -441,7 +420,7 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
             end
             break
         end
-# ---------- final update variable and save results------------
+        # ---------- final update variable and save results------------
         if ni > pmax 
             break
         end
@@ -466,8 +445,4 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
     alam[1] = lamfix(alam)
     return LassoPath(alam, beta, b0, npass)
 end
-
-
-
-
 

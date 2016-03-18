@@ -14,7 +14,7 @@ include("C:/Users/Pstey/juliawd/group_lasso/gglasso.jl")
 
 
 # d_raw = readcsv("/home/ubuntu/rwd/bardet.csv", header = true)
-d_raw = readcsv("C:/Users/Pstey/juliawd/grouped_lasso/bardet.csv", header = true)
+d_raw = readcsv("C:/Users/Pstey/juliawd/group_lasso/bardet.csv", header = true)
 
 d = d_raw[1]
 
@@ -28,4 +28,7 @@ group1 = rep(1:20, each = 5)
 
 
 
-@time z = grp_lasso(X, y, group1)
+@time z = grp_lasso(X, y, group1);
+
+
+
