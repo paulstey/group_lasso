@@ -1,1 +1,1 @@
-# group_lasso
+# GroupLasso
