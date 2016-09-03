@@ -1,9 +1,9 @@
-############
+
 # Group-Wise Lasso Using GMD Algorithm
 # Translated from Yang & Zou's Fortran code
 # Date: August 31, 2015
 # Author: Paul Stey
-############
+
 
 using DataFrames
 using Debug
