@@ -1,9 +1,7 @@
-
 # Group-Wise Lasso Using GMD Algorithm
 # Translated from Yang & Zou's Fortran code
 # Date: August 31, 2015
 # Author: Paul Stey
-
 
 using DataFrames
 using Debug
@@ -40,10 +38,6 @@ function lamfix(lam::Array{Float64, 1})
 end
 
 
-
-
-
-
 function not_converged(b::Array{Float64, 1}, oldbeta::Array{Float64, 1}, max_gam::Float64, eps::Float64)
     result = true
     n = length(b)
@@ -56,7 +50,6 @@ function not_converged(b::Array{Float64, 1}, oldbeta::Array{Float64, 1}, max_gam
     end
     return result
 end
-
 
 
 function found_nonzero(v::Array{Float64, 1})
@@ -73,8 +66,6 @@ function found_nonzero(v::Array{Float64, 1})
 end
 
 
-
-
 function update_jxx!(jxx::Array{Int64, 1}, ga::Array{Float64, 1}, pf::Array{Float64, 1}, al::Float64, al0::Float64, bn::Int64)
     tlam = 2*al - al0
     for i = 1:bn                       
@@ -88,8 +79,6 @@ function update_jxx!(jxx::Array{Int64, 1}, ga::Array{Float64, 1}, pf::Array{Floa
 end
 
 
-
-
 function compute_u(x::Array{Float64, 2}, r::Array{Float64, 1}, b::Array{Float64, 1}, start::Int64, ending::Int64, nobs::Int64, gam_i::Float64)
     u_tmp = (x[:, start:ending]'*r)
     n = length(u_tmp)
@@ -99,9 +88,6 @@ function compute_u(x::Array{Float64, 2}, r::Array{Float64, 1}, b::Array{Float64,
     end
     return u
 end
-
-
-
 
 
 function compute_b(u::Array{Float64, 1}, t::Float64, gam_i::Float64, unorm::Float64)
@@ -114,8 +100,6 @@ function compute_b(u::Array{Float64, 1}, t::Float64, gam_i::Float64, unorm::Floa
     return res 
 end
 
-
-
         
 function count_nonzero_betas(beta::Array{Float64, 2}, idx::Array{Int64, 1}, ix::Array{Int64, 1}, iy::Array{Int64, 1}, l::Int64, ni::Int64)
     me = 0
@@ -127,8 +111,6 @@ function count_nonzero_betas(beta::Array{Float64, 2}, idx::Array{Int64, 1}, ix::
     end
     return me
 end
-
-
 
 
 function get_lamfact(n::Int64, p::Int64)
@@ -149,9 +131,6 @@ function get_upperbound(x::Array{Float64, 2}, ix::Array{Int64, 1}, iy::Array{Int
     end
     return gam
 end
-
-
-
 
 
 
@@ -227,10 +206,6 @@ function grp_lasso(x, y, group = nothing, loss = "ls", nlam::Int64 = 100, lambda
     end
     return lasso_path
 end
-
-
-
-
 
 
 
@@ -445,4 +420,3 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
     alam[1] = lamfix(alam)
     return LassoPath(alam, beta, b0, npass)
 end
-
