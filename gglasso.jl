@@ -113,15 +113,7 @@ function count_nonzero_betas(beta::Array{Float64, 2}, idx::Array{Int64, 1}, ix::
 end
 
 
-function get_lamfact(n::Int64, p::Int64)
-    if n < p
-        res = 0.05
-    else
-        res = 0.001
-    end
-    return res
-end
-
+get_lamfact(n::Int64, p::Int64) = n < p ? 0.05 : 0.001
 
 
 function get_upperbound(x::Array{Float64, 2}, ix::Array{Int64, 1}, iy::Array{Int64, 1}, bn::Int64)
