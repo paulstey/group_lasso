@@ -387,7 +387,7 @@ function ls_f(bn, bs, ix, iy, gam, x, y, pf, dfmax, pmax, nlam, flmin, ulam, eps
             end
             break
         end
-        # ------- final update variable and save results--------
+        # -- final update variable and save results--
         if ni > pmax 
             break
         end
